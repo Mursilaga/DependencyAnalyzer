@@ -139,13 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Analyzer.cpp" />
+    <ClCompile Include="IncludeSeeker.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="DependencyNode.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="OutputWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Analyzer.h" />
     <ClInclude Include="DependencyNode.h" />
+    <ClInclude Include="IncludeSeeker.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="OutputWriter.h" />
   </ItemGroup>

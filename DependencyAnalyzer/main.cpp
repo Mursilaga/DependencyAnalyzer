@@ -1,9 +1,12 @@
 #include <iostream>
 #include "InputHandler.h"
+#include "Analyzer.h"
 
 int main(int argc, char* argv[]) {
-    InputHandler handler(argc, argv);
-
+    InputHandler input(argc, argv);
+    
+    Analyzer analyzer(input.getSources(), input.getAdditionalIncludes());
+    analyzer.start();
 
     system("pause");
 }

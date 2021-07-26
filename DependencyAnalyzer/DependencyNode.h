@@ -7,11 +7,13 @@
 class DependencyNode
 {
 public:
-    DependencyNode(std::string path) {
-        path_ = path;
+    DependencyNode(std::string name) {
+        name_ = name;
     }
 
+    bool exist_;
+    std::string name_;
     std::string path_;
-    std::vector<std::unique_ptr<DependencyNode>> dependencies_;
+    std::vector<std::shared_ptr<DependencyNode>> dependencies_;
 };
 
