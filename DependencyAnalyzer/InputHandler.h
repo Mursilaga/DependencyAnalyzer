@@ -3,8 +3,8 @@
 #include <string>
 #include <memory>
 
-class InputHandler
-{
+class InputHandler {
+
 public:
     InputHandler(int argc, char* argv[]);
     ~InputHandler() {};

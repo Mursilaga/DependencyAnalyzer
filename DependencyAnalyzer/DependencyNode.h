@@ -4,8 +4,8 @@
 #include <string>
 #include <memory>
 
-class DependencyNode
-{
+class DependencyNode {
+
 public:
     DependencyNode(std::string name) {
         name_ = name;

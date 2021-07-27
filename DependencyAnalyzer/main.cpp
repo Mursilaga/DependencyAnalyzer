@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
     InputHandler input(argc, argv);
     
     Analyzer analyzer(input.getSources(), input.getAdditionalIncludes());
-    analyzer.start();
+    analyzer.exec();
 
     system("pause");
 }
