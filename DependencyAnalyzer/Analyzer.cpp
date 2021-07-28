@@ -5,7 +5,7 @@
 #include <filesystem>
 #include <iostream>
 #include <regex>
-
+#include <algorithm>
 
 void Analyzer::exec(int argc, char* argv[]) {
     InputHandler input;
@@ -33,7 +33,8 @@ void Analyzer::exec(int argc, char* argv[]) {
     }
 
     countFrequencies();
-    writer.printFreq(std::make_shared<std::map<std::string, unsigned>>(files_freq_));
+    sortFrequencies();
+    writer.printFreq(std::make_shared<std::vector<std::pair<std::string, int>>>(files_freq_sorted));
 }
 
 
@@ -81,7 +82,21 @@ void Analyzer::countFrequencies() {
             countFrequenciesInOne(node);
         }
     }
+}
 
+
+void Analyzer::sortFrequencies() {
+    for (auto file : files_freq_) {
+        files_freq_sorted.push_back(file);
+    }
+
+    std::sort(files_freq_sorted.begin(), files_freq_sorted.end(),
+        [](auto a, auto b) {
+            if (a.second == b.second)
+                return a.first < b.first;
+            else
+                return a.second > b.second;
+        });
 }
 
 

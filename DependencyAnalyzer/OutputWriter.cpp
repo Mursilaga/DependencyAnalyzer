@@ -14,7 +14,7 @@ void OutputWriter::printNodeWithChilds(std::shared_ptr<DependencyNode> node, int
 }
 
 
-void OutputWriter::printFreq(std::shared_ptr<std::map<std::string, unsigned>> files_freq) {
+void OutputWriter::printFreq(std::shared_ptr<std::vector<std::pair<std::string, int>>> files_freq) {
     std::cout << std::endl;
     for (auto file : *files_freq) {
         std::cout << file.first << " " << file.second << std::endl;

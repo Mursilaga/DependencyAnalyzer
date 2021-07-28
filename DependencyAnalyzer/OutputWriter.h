@@ -9,7 +9,7 @@ public:
     ~OutputWriter() {};
 
     void printTree(std::shared_ptr<DependencyNode> node);
-    void printFreq(std::shared_ptr<std::map<std::string, unsigned>> files_freq);
+    void printFreq(std::shared_ptr<std::vector<std::pair<std::string, int>>> files_freq);
     void printUsage();
 
 private:
