@@ -1,4 +1,5 @@
 #include "Analyzer.h"
+#include "InputHandler.h"
 #include "OutputWriter.h"
 
 #include <filesystem>
@@ -6,15 +7,20 @@
 #include <regex>
 
 
-Analyzer::Analyzer(std::vector<std::string> src, std::vector<std::string> additional) {
-    root_dir_ = src[0];
-    seeker = std::make_unique<IncludeSeeker>(src, additional);
-}
-
-
-void Analyzer::exec() {
+void Analyzer::exec(int argc, char* argv[]) {
+    InputHandler input;
     OutputWriter writer;
-    for (auto& file : std::filesystem::recursive_directory_iterator(root_dir_)) { //TODO may be move to IncludeSeeker filesystem work?
+
+    input.handle(argc, argv);
+    if (!input.isValid()) {
+        writer.printUsage();
+        return;
+    }
+
+    std::string root_dir = input.getRootDir();
+    seeker = std::make_unique<IncludeSeeker>(root_dir, input.getAdditionalIncludes());
+    
+    for (auto& file : std::filesystem::recursive_directory_iterator(root_dir)) { //TODO may be move to IncludeSeeker filesystem work?
 
         if (std::regex_search(file.path().filename().string(), std::regex(".+\.[hc]pp$"))) { //work only with .cpp or .hpp files, exclude directories
             auto root = std::make_shared<DependencyNode>(file.path().filename().string());

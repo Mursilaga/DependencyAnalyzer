@@ -8,19 +8,19 @@
 class Analyzer {
 
 public:
-    Analyzer(std::vector<std::string> src, std::vector<std::string> additional);
+    Analyzer() {};
     ~Analyzer() {};
 
-    void exec();
-    void buildDependencyTree(std::shared_ptr<DependencyNode> node);
-    void countFrequencies();
+    void exec(int argc, char* argv[]);
+
 
 private:
-    std::string root_dir_;
     std::map<std::string, unsigned> files_freq_;
     std::unique_ptr<IncludeSeeker> seeker;
     std::vector<std::shared_ptr<DependencyNode>> dependency_roots_;
 
+    void buildDependencyTree(std::shared_ptr<DependencyNode> node);
+    void countFrequencies();
     void countFrequenciesInOne(std::shared_ptr<DependencyNode> branch);
 };
 

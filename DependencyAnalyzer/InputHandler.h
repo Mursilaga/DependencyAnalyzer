@@ -6,15 +6,17 @@
 class InputHandler {
 
 public:
-    InputHandler(int argc, char* argv[]);
+    InputHandler() {};
     ~InputHandler() {};
 
-    void printUsage();
-    std::vector<std::string> getSources();
+    void handle(int argc, char* argv[]);
+    bool isValid();
+    std::string getRootDir();
     std::vector<std::string> getAdditionalIncludes();
 
 private:
-    std::vector<std::string> sources_;
+    bool input_validation_ = false;
+    std::string root_dir_;
     std::vector<std::string> additional_includes_;
 };
 

@@ -20,3 +20,13 @@ void OutputWriter::printFreq(std::shared_ptr<std::map<std::string, unsigned>> fi
         std::cout << file.first << " " << file.second << std::endl;
     }
 }
+
+
+void OutputWriter::printUsage() {
+    std::cout << "\nusage:\n\
+    DependencyAnalyzer.exe <sources path> [options]\n\
+    options:\n\
+        -I - path for source files search\n\
+    example:\n\
+        DependencyAnalyzer.exe d:\\mysources\\ -I d:\\mysources\\includes -I d:\\mylibrary\n";
+}

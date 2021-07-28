@@ -1,36 +1,38 @@
 #include "InputHandler.h"
 #include <iostream>
 
-InputHandler::InputHandler(int argc, char* argv[]) {
+
+void InputHandler::handle(int argc, char* argv[]) {
     if (argc % 2 != 0) {
-        std::cout << "invalid parameters count!\n\n";
-        printUsage();
+        input_validation_ = false;
+        return;
     }
-    else {
-        sources_.push_back(argv[1]);
-        for (int i = 3; i <= argc; i += 2) {
-            additional_includes_.push_back(argv[i]);
+
+    for (int i = 2; i < argc; i += 2) {
+        if (std::string(argv[i]) != "-I") {
+            input_validation_ = false;
+            return;
         }
-        //TODO check option, check path
     }
+
+    root_dir_ = argv[1];
+    for (int i = 3; i < argc; i += 2) {
+        additional_includes_.push_back(argv[i]);
+    }
+    input_validation_ = true;
 }
 
 
-std::vector<std::string> InputHandler::getSources() {
-    return sources_;
+bool InputHandler::isValid() {
+    return input_validation_;
+}
+
+
+std::string InputHandler::getRootDir() {
+    return root_dir_;
 }
 
 
 std::vector<std::string> InputHandler::getAdditionalIncludes() {
     return additional_includes_;
-}
-
-
-void InputHandler::printUsage() {
-    std::cout << "usage:\n\
-    analyzer <sources path> [options]\n\
-    options:\n\
-        -I - path for source files search\n\
-    example:\n\
-        DependencyAnalyzer.exe d:\\mysources\\ -I d:\\mysources\\includes -I d:\\mylibrary\n";
 }

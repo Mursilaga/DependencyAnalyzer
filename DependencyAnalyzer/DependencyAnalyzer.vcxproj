@@ -143,7 +143,6 @@
     <ClCompile Include="Analyzer.cpp" />
     <ClCompile Include="IncludeSeeker.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="DependencyNode.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="OutputWriter.cpp" />
   </ItemGroup>

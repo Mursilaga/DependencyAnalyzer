@@ -3,8 +3,8 @@
 #include <regex>
 
 
-IncludeSeeker::IncludeSeeker(std::vector<std::string> src, std::vector<std::string> additional) {
-    sources_ = src;
+IncludeSeeker::IncludeSeeker(std::string root_dir, std::vector<std::string> additional) {
+    root_dir_ = root_dir;
     additional_includes_ = additional;
 }
 
@@ -34,7 +34,7 @@ std::string IncludeSeeker::getPathIfFileExist(std::string file_name) {
     if (file_name.find("<") != std::string::npos)
         directories_for_seek = additional_includes_;
     else
-        directories_for_seek = sources_;
+        directories_for_seek = { root_dir_ };
     
     file_name = file_name.substr(1, file_name.size() - 2); //cut quotes
     std::string result = "";
