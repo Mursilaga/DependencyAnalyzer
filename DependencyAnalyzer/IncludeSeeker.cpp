@@ -13,10 +13,32 @@ std::vector<std::string> IncludeSeeker::getFileDependencies(std::string path) {
     std::ifstream input(path);
     std::string line;
     std::vector<std::string> result;
+    bool inside_multistring_comment = false;
+
     if (input.is_open()) {
-        std::regex rex("^#include *[<\"].+\.[hc]pp[>\"]$"); //TODO catch multistring comment
         while (std::getline(input, line)) {
-            if (std::regex_search(line, rex)) {
+            line = std::regex_replace(line, std::regex("/\\*.*\\*/"), ""); //cut comment in one string like /*comment*/
+
+            if (inside_multistring_comment) { //cut comment in the beginning of line
+                auto end_comment_pos = line.find("*/");
+                if (end_comment_pos != std::string::npos) {
+                    inside_multistring_comment = false;
+                    line = line.substr(end_comment_pos + 2);
+                }
+                else {
+                    line = ""; //all line is inside multi string comment
+                }
+            }
+
+            if (!inside_multistring_comment) { //cut comment in the ending of line
+                auto comment_pos = line.find("\*");
+                if (comment_pos != std::string::npos) {
+                    inside_multistring_comment = true;
+                    line = line.substr(0, comment_pos - 1);
+                }
+            }
+
+            if (std::regex_search(line, std::regex("^#include *[<\"].+\.[hc]pp[>\"]$"))) {
                 std::size_t pos = line.find("\"");
                 if(pos == std::string::npos)
                     pos = line.find("<");

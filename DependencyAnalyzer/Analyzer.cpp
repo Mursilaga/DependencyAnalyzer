@@ -20,7 +20,7 @@ void Analyzer::exec(int argc, char* argv[]) {
     std::string root_dir = input.getRootDir();
     seeker = std::make_unique<IncludeSeeker>(root_dir, input.getAdditionalIncludes());
     
-    for (auto& file : std::filesystem::recursive_directory_iterator(root_dir)) { //TODO may be move to IncludeSeeker filesystem work?
+    for (auto& file : std::filesystem::recursive_directory_iterator(root_dir)) {
 
         if (std::regex_search(file.path().filename().string(), std::regex(".+\.[hc]pp$"))) { //work only with .cpp or .hpp files, exclude directories
             auto root = std::make_shared<DependencyNode>(file.path().filename().string());
