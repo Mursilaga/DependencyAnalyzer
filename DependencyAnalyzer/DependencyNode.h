@@ -14,6 +14,7 @@ public:
     bool exist_;
     std::string name_;
     std::string path_;
+    std::shared_ptr<DependencyNode> parent_ = nullptr;
     std::vector<std::shared_ptr<DependencyNode>> dependencies_;
 };
 

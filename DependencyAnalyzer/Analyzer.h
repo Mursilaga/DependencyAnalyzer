@@ -20,6 +20,7 @@ private:
     std::vector<std::shared_ptr<DependencyNode>> dependency_roots_;
 
     void buildDependencyTree(std::shared_ptr<DependencyNode> node);
+    bool isCyclicDependency(std::shared_ptr<DependencyNode> node);
     void countFrequencies();
     void countFrequenciesInOne(std::shared_ptr<DependencyNode> branch);
 };

@@ -36,7 +36,6 @@ std::string IncludeSeeker::getPathIfFileExist(std::string file_name) {
     else
         directories_for_seek = { root_dir_ };
     
-    file_name = file_name.substr(1, file_name.size() - 2); //cut quotes
     std::string result = "";
     for (auto iter = directories_for_seek.begin(); iter < directories_for_seek.end(); iter++) {
         result = *iter + "\\" + file_name;
