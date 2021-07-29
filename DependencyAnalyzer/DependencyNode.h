@@ -11,7 +11,8 @@ public:
         name_ = name;
     }
 
-    bool exist_;
+    bool in_additional_dirs_ = false;
+    bool exist_ = false;
     std::string name_;
     std::string path_;
     std::shared_ptr<DependencyNode> parent_ = nullptr;

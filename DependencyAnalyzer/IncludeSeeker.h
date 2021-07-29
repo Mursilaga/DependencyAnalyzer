@@ -9,7 +9,7 @@ public:
     ~IncludeSeeker() {};
 
     std::vector<std::string> getFileDependencies(std::string file_name);
-    std::string getPathIfFileExist(std::string file_name);
+    std::string getPathIfFileExist(std::string file_name, bool seek_in_dirs);
 
 private:
     std::string root_dir_;

@@ -40,7 +40,7 @@ void Analyzer::exec(int argc, char* argv[]) {
 
 void Analyzer::buildDependencyTree(std::shared_ptr<DependencyNode> node) {
     if (node->path_ == "") {
-        node->path_ = seeker->getPathIfFileExist(node->name_);
+        node->path_ = seeker->getPathIfFileExist(node->name_, node->in_additional_dirs_);
     }
     
     if(node->path_ != "") {
@@ -49,6 +49,9 @@ void Analyzer::buildDependencyTree(std::shared_ptr<DependencyNode> node) {
         for (auto iter = dependencies.begin(); iter < dependencies.end(); iter++) {
             auto new_node_ptr = std::make_shared<DependencyNode>((*iter).substr(1, (*iter).size() - 2));
             new_node_ptr->parent_ = node;
+            if ((*iter).find("<") != std::string::npos)
+                new_node_ptr->in_additional_dirs_ = true;
+
             if (!isCyclicDependency(new_node_ptr)) { //Cyclic dependencies ignored in tree
                 node->dependencies_.push_back(new_node_ptr);
                 buildDependencyTree(new_node_ptr);

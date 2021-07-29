@@ -51,9 +51,9 @@ std::vector<std::string> IncludeSeeker::getFileDependencies(std::string path) {
     return result;
 }
 
-std::string IncludeSeeker::getPathIfFileExist(std::string file_name) {
+std::string IncludeSeeker::getPathIfFileExist(std::string file_name, bool seek_in_dirs) {
     std::vector<std::string> directories_for_seek;
-    if (file_name.find("<") != std::string::npos)
+    if (seek_in_dirs)
         directories_for_seek = additional_includes_;
     else
         directories_for_seek = { root_dir_ };
