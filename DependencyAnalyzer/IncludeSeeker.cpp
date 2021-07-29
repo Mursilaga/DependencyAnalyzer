@@ -3,12 +3,6 @@
 #include <regex>
 
 
-IncludeSeeker::IncludeSeeker(std::string root_dir, std::vector<std::string> additional) {
-    root_dir_ = root_dir;
-    additional_includes_ = additional;
-}
-
-
 std::vector<std::string> IncludeSeeker::getFileDependencies(std::string path) {
     std::ifstream input(path);
     std::string line;
@@ -51,13 +45,8 @@ std::vector<std::string> IncludeSeeker::getFileDependencies(std::string path) {
     return result;
 }
 
-std::string IncludeSeeker::getPathIfFileExist(std::string file_name, bool seek_in_dirs) {
-    std::vector<std::string> directories_for_seek;
-    if (seek_in_dirs)
-        directories_for_seek = additional_includes_;
-    else
-        directories_for_seek = { root_dir_ };
-    
+std::string IncludeSeeker::getPathIfFileExist(std::string file_name, std::vector<std::string> directories_for_seek) {
+   
     std::string result = "";
     for (auto iter = directories_for_seek.begin(); iter < directories_for_seek.end(); iter++) {
         result = *iter + "\\" + file_name;

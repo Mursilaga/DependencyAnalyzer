@@ -19,6 +19,7 @@ private:
     std::vector<std::pair<std::string, int>> files_freq_sorted;
     std::unique_ptr<IncludeSeeker> seeker;
     std::vector<std::shared_ptr<DependencyNode>> dependency_roots_;
+    std::vector<std::string> additional_dirs_;
 
     void buildDependencyTree(std::shared_ptr<DependencyNode> node);
     bool isCyclicDependency(std::shared_ptr<DependencyNode> node);

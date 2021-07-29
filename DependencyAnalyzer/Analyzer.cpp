@@ -16,9 +16,11 @@ void Analyzer::exec(int argc, char* argv[]) {
         writer.printUsage();
         return;
     }
-
+    
     std::string root_dir = input.getRootDir();
-    seeker = std::make_unique<IncludeSeeker>(root_dir, input.getAdditionalIncludes());
+    additional_dirs_ = input.getAdditionalIncludes();
+
+    seeker = std::make_unique<IncludeSeeker>();
     
     for (auto& file : std::filesystem::recursive_directory_iterator(root_dir)) {
 
@@ -40,7 +42,14 @@ void Analyzer::exec(int argc, char* argv[]) {
 
 void Analyzer::buildDependencyTree(std::shared_ptr<DependencyNode> node) {
     if (node->path_ == "") {
-        node->path_ = seeker->getPathIfFileExist(node->name_, node->in_additional_dirs_);
+        std::vector<std::string> dirs_for_seek;
+        if (node->in_additional_dirs_) {
+            dirs_for_seek = additional_dirs_;
+        }
+        else {
+            dirs_for_seek = { std::filesystem::path(node->parent_->path_).parent_path().string() };
+        }
+        node->path_ = seeker->getPathIfFileExist(node->name_, dirs_for_seek);
     }
     
     if(node->path_ != "") {
